@@ -75,4 +75,4 @@ app.post("/:act",async(req,res)=>{
         res.status(500).json({type:"error",content:answer.content});
       }
 })
-module.exports=app;
+export default app;
