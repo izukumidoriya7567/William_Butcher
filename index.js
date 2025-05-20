@@ -60,8 +60,7 @@ const generate=async(query,act)=>{
 const app=express();
 app.use(cors({
     origin: '*',
-  methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST'],
 }));
 app.use(express.json());
 app.get("/",(req,res)=>{
