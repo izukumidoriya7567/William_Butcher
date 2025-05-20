@@ -56,22 +56,24 @@ const generate=async(query,act)=>{
         return {type:"error",content:e};
     }
 }
-const app=express();
-app.use(cors());
-app.use(express.json());
-app.get("/",(req,res)=>{
-    res.status(200).send("Do you think you have got the bullocks: William Butcher");
-})
-app.post("/:act",async(req,res)=>{
-      const act=req.params.act;
-      const query=req.body;
-      const answer=await generate(query.input,act);
-      console.log(answer);
-      if(answer.type==="success"){
-        res.status(200).json({type:"success",content:answer.content});
-      }
-      else{
-        res.status(500).json({type:"error",content:answer.content});
-      }
-})
-module.exports=app;
+const answ=await generate("What is the difference between IPC and CrPC?","IPC");
+console.log(answ);
+// const app=express();
+// app.use(cors());
+// app.use(express.json());
+// app.get("/",(req,res)=>{
+//     res.status(200).send("Do you think you have got the bullocks: William Butcher");
+// })
+// app.post("/:act",async(req,res)=>{
+//       const act=req.params.act;
+//       const query=req.body;
+//       const answer=await generate(query.input,act);
+//       console.log(answer);
+//       if(answer.type==="success"){
+//         res.status(200).json({type:"success",content:answer.content});
+//       }
+//       else{
+//         res.status(500).json({type:"error",content:answer.content});
+//       }
+// })
+// module.exports=app;
