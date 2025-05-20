@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import {QdrantClient} from "@qdrant/js-client-rest";
 import {HuggingFaceInferenceEmbeddings} from "@langchain/community/embeddings/hf";
 import {ChatPromptTemplate} from "@langchain/core/prompts";
@@ -5,8 +7,9 @@ import {ChatGroq} from "@langchain/groq";
 import {z} from "zod";
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config();
+const app=express();
+app.use(cors());
+app.use(express.json());
 const embeddings=new HuggingFaceInferenceEmbeddings({
     model: "sentence-transformers/all-MiniLM-L6-v2",
     apiKey: process.env.EMBEDDINGS_APIKEY,
@@ -57,20 +60,14 @@ const generate=async(query,act)=>{
     }
 }
 
-const app=express();
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-app.use(express.json());
 app.get("/",(req,res)=>{
     res.status(200).send("Do you think you have got the bullocks: William Butcher");
 })
-app.post("/:act",async(req,res)=>{
+
+app.get("/:act/:query",async(req,res)=>{
       const act=req.params.act;
-      const query=req.body;
-      const answer=await generate(query.input,act);
+      const query=req.params.query;
+      const answer=await generate(query,act);
       console.log(answer);
       if(answer.type==="success"){
         res.status(200).json({type:"success",content:answer.content});
@@ -79,4 +76,6 @@ app.post("/:act",async(req,res)=>{
         res.status(500).json({type:"error",content:answer.content});
       }
 })
-export default app;
+app.listen(8000,()=>{
+    console.log("Server is up and running at port:8000");
+})
