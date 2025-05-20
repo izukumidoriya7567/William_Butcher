@@ -74,6 +74,4 @@ app.post("/:act",async(req,res)=>{
         res.status(500).json({type:"error",content:answer.content});
       }
 })
-app.listen(8000,()=>{
-    console.log("Server is up and running at PORT:8000");
-})
+module.exports=app;
