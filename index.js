@@ -58,7 +58,11 @@ const generate=async(query,act)=>{
 }
 
 const app=express();
-app.use(cors({origin:"https://fastidious-pithivier-9e42dc.netlify.app/"}));
+app.use(cors({
+    origin: '*',
+  methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 app.get("/",(req,res)=>{
     res.status(200).send("Do you think you have got the bullocks: William Butcher");
