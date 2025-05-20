@@ -9,11 +9,7 @@ import express from "express";
 import cors from "cors";
 const app=express();
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow only your frontend origin
-  // For multiple origins: origin: ['http://localhost:5173', 'https://yourproductionapp.com'],
-  // Or allow any origin: origin: '*', (less secure)
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true // If you need to send cookies or auth headers
+    origin:"http://localhost:5173",
 }));
 const embeddings=new HuggingFaceInferenceEmbeddings({
     model: "sentence-transformers/all-MiniLM-L6-v2",
